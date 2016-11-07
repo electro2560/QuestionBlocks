@@ -1,0 +1,9 @@
+name: QuestionBlocks
+version: 1.0.0
+author: ElectroBoy2560
+website: http://dev.electro2560.com/
+main: com.electro2560.dev.QuestionBlocks.Main
+commands:
+  questionblock:
+    aliases: [qblock, qblocks, questionblocks]
+    description: Used to create and edit question blocks.
