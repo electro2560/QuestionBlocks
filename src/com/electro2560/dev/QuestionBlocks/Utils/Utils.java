@@ -21,7 +21,6 @@ import net.minecraft.server.v1_10_R1.TileEntitySkull;
 public class Utils {
 	
 	public static boolean checkDelay(Player p, QBlock r){
-		
 		String key = p.getUniqueId().toString();
 		
 		Long millsecBefore = (Long) r.getDelays().get(p.getUniqueId().toString());

@@ -36,41 +36,41 @@ public class BlockClickEvent implements Listener{
 				return;
 			}
 				
-				String loc = Utils.locToString(event.getClickedBlock().getLocation());
+			String loc = Utils.locToString(event.getClickedBlock().getLocation());
 				
-				//Contains rewards
-				if(!Main.qBlocks.isEmpty() && Main.qBlocks.containsKey(loc)){
-					//There is a reward
-					//Execute reward
-					QBlock r = Main.qBlocks.get(loc);
+			//Contains rewards
+			if(!Main.qBlocks.isEmpty() && Main.qBlocks.containsKey(loc)){
+				//There is a reward
+				//Execute reward
+				QBlock r = Main.qBlocks.get(loc);
 
-					event.setCancelled(true);
-					//Check delay
-						if(Utils.checkDelay(p, r)){
-							//Can receive reward.
-							//Add reward items to inventory
-							int dropped = 0;
-							for (ItemStack i : r.getRewardItems()) {
-								if(r.getType().equalsIgnoreCase("inv")){
-									if(p.getInventory().firstEmpty() != -1){
-										//Inventory has space.
-										p.getInventory().addItem(i);
-									}else{
-										//Drop item on ground.
-										p.getWorld().dropItem(p.getLocation(), i);
-										dropped++;
-									}
-								}else p.getWorld().dropItem(Utils.stringToLoc(r.getLocation()), i);
+				event.setCancelled(true);
+				//Check delay
+				if(Utils.checkDelay(p, r)){
+					//Can receive reward.
+					//Add reward items to inventory
+					int dropped = 0;
+					for (ItemStack i : r.getRewardItems()) {
+						if(r.getType().equalsIgnoreCase("inv")){
+							if(p.getInventory().firstEmpty() != -1){
+								//Inventory has space.
+								p.getInventory().addItem(i);
+							}else{
+								//Drop item on ground.
+								p.getWorld().dropItem(p.getLocation(), i);
+								dropped++;
 							}
+						}else p.getWorld().dropItem(Utils.stringToLoc(r.getLocation()), i);
+					}
 
-							if(dropped == 1) p.sendMessage(Main.errPrefix + ChatColor.RED + "Full inventory. Dropped 1 item.");
-							else if(dropped != 0) p.sendMessage(Main.errPrefix + ChatColor.RED + "Full inventory. Dropped " + dropped + " items.");
+					if(dropped == 1) p.sendMessage(Main.errPrefix + ChatColor.RED + "Full inventory. Dropped 1 item.");
+					else if(dropped != 0) p.sendMessage(Main.errPrefix + ChatColor.RED + "Full inventory. Dropped " + dropped + " items.");
 							
-							p.sendMessage(Main.prefix + ChatColor.GREEN + "You have found this reward §7" + (r.getReceived().get(p.getUniqueId().toString()) == null ? "0" : r.getReceived().get(p.getUniqueId().toString())) + "§a time(s) before!");
-							if(r.getReceived().containsKey(p.getUniqueId().toString())) r.getReceived().put(p.getUniqueId().toString(), r.getReceived().get(p.getUniqueId().toString()) + 1);
-							else r.getReceived().put(p.getUniqueId().toString(), 1);
-						}
-					
+					p.sendMessage(Main.prefix + ChatColor.GREEN + "You have found this reward §7" + (r.getReceived().get(p.getUniqueId().toString()) == null ? "0" : r.getReceived().get(p.getUniqueId().toString())) + "§a time(s) before!");
+					if(r.getReceived().containsKey(p.getUniqueId().toString())) r.getReceived().put(p.getUniqueId().toString(), r.getReceived().get(p.getUniqueId().toString()) + 1);
+					else r.getReceived().put(p.getUniqueId().toString(), 1);
 				}
+					
+			}
 		}
 }
